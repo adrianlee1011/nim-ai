@@ -102,7 +102,7 @@ class NimAI():
         If no Q-value exists yet in `self.q`, return 0.
         """
         try:
-            q_value = self.q[(state, action)]
+            q_value = self.q[tuple(state), action]
         except KeyError:
             q_value = 0
         return q_value
@@ -122,7 +122,7 @@ class NimAI():
         `alpha` is the learning rate, and `new value estimate`
         is the sum of the current reward and estimated future rewards.
         """
-        raise NotImplementedError
+        self.q[tuple(state), action] = old_q + self.alpha * (sum(reward, future_rewards) - self.q[tuple(state), action])
 
     def best_future_reward(self, state):
         """
